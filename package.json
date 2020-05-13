@@ -13,7 +13,7 @@
     "test": "jest --env=jsdom",
     "test:ci": "cross-env CI=1 jest --env=jsdom",
     "prettier": "prettier --write 'src/**/*.{js,json,css}'",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
