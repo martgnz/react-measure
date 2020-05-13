@@ -1,6 +1,5 @@
 import { Component, createElement } from 'react'
 import PropTypes from 'prop-types'
-import ResizeObserver from 'resize-observer-polyfill'
 
 import getTypes from './get-types'
 import getContentRect from './get-content-rect'
@@ -16,6 +15,7 @@ function withContentRect(types) {
         margin: PropTypes.bool,
         innerRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
         onResize: PropTypes.func,
+        polyfill: PropTypes.func,
       }
 
       state = {
@@ -36,7 +36,10 @@ function withContentRect(types) {
       _node = null
 
       componentDidMount() {
-        this._resizeObserver = new ResizeObserver(this.measure)
+        this._resizeObserver = this.props.polyfill
+          ? new this.props.polyfill(this.measure)
+          : new ResizeObserver(this.measure)
+
         if (this._node !== null) {
           this._resizeObserver.observe(this._node)
 
